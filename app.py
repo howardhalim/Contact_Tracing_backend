@@ -182,6 +182,7 @@ from flask import Flask,jsonify,request,make_response
 from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import json
 from pytz import utc
+from datetime import datetime 
 
 app = Flask(__name__)
 
@@ -204,11 +205,11 @@ class User(db.Model):
 class Checkin(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     time = db.Column(db.DateTime(timezone=True),
-                           server_default=utc.now())
+                           default=datetime.utcnow)
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
     place = db.Column(db.String(100))
 
-db.create_all()
+
 
 @app.route('/')
 def hello_world():

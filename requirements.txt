@@ -1,5 +1,5 @@
 Flask==2.0.1
 Flask_SQLAlchemy==2.5.1
 itsdangerous==2.0.1
-SQLAlchemy==1.4.23
+pytz==2021.1
 gunicorn
