@@ -7,8 +7,8 @@ from sqlalchemy import func
 
 app =   Flask(__name__)
 CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
+# app.config['CORS_HEADERS'] = 'Content-Type'
+# app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
