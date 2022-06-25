@@ -50,6 +50,49 @@ def ReturnJSON():
         }
         
         return jsonify(data)
+@app.route('/register', methods = ['GET','POST'])
+def register():
+    print("in")
+    if(request.method == 'POST'):
+        form = json.loads(request.data)
+        email = form["email"]
+        password = form["password"]
+        name = form["name"]
+        passport = form["passport"]
+        user = User.query.filter_by(email=email).first()
+        if user:
+            return make_response(json.dumps('Email already exists!')), 400
+        else:
+            new_user = User(email=email,
+                            password = password,
+                            name = name,
+                            passport = passport,
+                            register = 0,
+                            )
+            db.session.add(new_user)
+            db.session.commit()
+            # login_user(new_user, remember=True)
+            
+            return make_response(json.dumps('Successfully registered')), 200
+
+@app.route('/login', methods = ['GET','POST'])
+def login():
+    if(request.method == 'POST'):
+        form = json.loads(request.data)
+        email = form["email"]
+        password = form['password']
+        user = User.query.filter_by(email=email).first()
+        if user:
+
+            if(user.password == password):
+
+                return make_response(json.dumps("Login Successfull")),200
+            else:
+                return make_response(json.dumps('Incorrect password'))
+        else:
+            return make_response(json.dumps('Email does not exist!'))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
