@@ -210,7 +210,7 @@ class Checkin(db.Model):
     place = db.Column(db.String(100))
 
 
-
+db.create_all()
 @app.route('/')
 def hello_world():
     return 'Hello Sammy!'
