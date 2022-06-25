@@ -23,8 +23,57 @@
 
 
 
-# # db.create_all()
 
+# app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
+# # db.create_all()
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key = True)
+#     email = db.Column(db.String(100), unique = True, nullable = False)
+#     password = db.Column(db.String(100), nullable = False)
+#     name = db.Column(db.String(100), nullable = False)
+#     passport = db.Column(db.String(100), unique = True, nullable = False)
+#     register = db.Column(db.Integer, nullable = False)
+#     status = db.Column(db.String(100))
+#     eyeCondition = db.Column(db.String(100))
+
+
+
+# class Checkin(db.Model):
+#     id = db.Column(db.Integer, primary_key = True)
+#     time = db.Column(db.DateTime(timezone=True),
+#                            server_default=func.now())
+#     user = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     place = db.Column(db.String(100))
+
+# db.create_all()
+
+
+# @app.route('/register', methods = ['GET','POST'])
+# def register():
+#     print("in")
+#     if(request.method == 'POST'):
+#         form = json.loads(request.data)
+#         email = form["email"]
+#         password = form["password"]
+#         name = form["name"]
+#         passport = form["passport"]
+#         user = User.query.filter_by(email=email).first()
+#         if user:
+#             return make_response(json.dumps('Email already exists!')), 400
+#         else:
+#             new_user = User(email=email,
+#                             password = password,
+#                             name = name,
+#                             passport = passport,
+#                             register = 0,
+#                             )
+#             db.session.add(new_user)
+#             db.session.commit()
+#             # login_user(new_user, remember=True)
+            
+#             return make_response(json.dumps('Successfully registered')), 200
 
 # # @app.route('/register', methods = ['GET','POST'])
 # # def register():
@@ -134,55 +183,7 @@ from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import json
 
 app = Flask(__name__)
-app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    password = db.Column(db.String(100), nullable = False)
-    name = db.Column(db.String(100), nullable = False)
-    passport = db.Column(db.String(100), unique = True, nullable = False)
-    register = db.Column(db.Integer, nullable = False)
-    status = db.Column(db.String(100))
-    eyeCondition = db.Column(db.String(100))
 
-
-
-class Checkin(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    time = db.Column(db.DateTime(timezone=True),
-                           server_default=func.now())
-    user = db.Column(db.Integer, db.ForeignKey('user.id'))
-    place = db.Column(db.String(100))
-
-db.create_all()
-
-
-@app.route('/register', methods = ['GET','POST'])
-def register():
-    print("in")
-    if(request.method == 'POST'):
-        form = json.loads(request.data)
-        email = form["email"]
-        password = form["password"]
-        name = form["name"]
-        passport = form["passport"]
-        user = User.query.filter_by(email=email).first()
-        if user:
-            return make_response(json.dumps('Email already exists!')), 400
-        else:
-            new_user = User(email=email,
-                            password = password,
-                            name = name,
-                            passport = passport,
-                            register = 0,
-                            )
-            db.session.add(new_user)
-            db.session.commit()
-            # login_user(new_user, remember=True)
-            
-            return make_response(json.dumps('Successfully registered')), 200
 
 @app.route('/')
 def hello_world():
