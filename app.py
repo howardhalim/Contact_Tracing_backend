@@ -149,14 +149,11 @@
 from flask import Flask,jsonify,request,make_response
 from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import json
-from flask_login import login_user, logout_user, login_required, current_user
-from flask_cors import CORS, cross_origin
-from sqlalchemy import func
-from flask import Flask,jsonify,request,make_response
+
 app = Flask(__name__)
-app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+# app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
 @app.route('/')
 def hello_world():
     return 'Hello Sammy!'
