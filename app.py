@@ -46,16 +46,7 @@
 
 
 # # db.create_all()
-# @app.route('/returnjson', methods = ['GET'])
-# @cross_origin()
-# def ReturnJSON():
-#     if(request.method == 'GET'):
-#         data = {
-#             "Modules" : 15,
-#             "Subject" : "Data Structures and Algorithms",
-#         }
-        
-#         return jsonify(data)
+
 
 # # @app.route('/register', methods = ['GET','POST'])
 # # def register():
@@ -162,12 +153,22 @@
 
 
 
-from flask import Flask
+from flask import Flask,jsonify,request,make_response
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
     return 'Hello Sammy!'
+
+@app.route('/returnjson', methods = ['GET'])
+def ReturnJSON():
+    if(request.method == 'GET'):
+        data = {
+            "Modules" : 15,
+            "Subject" : "Data Structures and Algorithms",
+        }
+        
+        return jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True)
