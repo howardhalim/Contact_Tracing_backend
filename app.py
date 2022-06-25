@@ -27,7 +27,7 @@
 # app.config ['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/database'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy(app)
-# # db.create_all()
+
 # class User(db.Model):
 #     id = db.Column(db.Integer, primary_key = True)
 #     email = db.Column(db.String(100), unique = True, nullable = False)
@@ -181,9 +181,34 @@
 from flask import Flask,jsonify,request,make_response
 from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import json
+from sqlalchemy import func
 
 app = Flask(__name__)
 
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'postgres://wwdvjxfnarrfgi:1ca950510df44652e0ead171affb4ae982837e7deefbaa21efb494462f330a88@ec2-44-205-41-76.compute-1.amazonaws.com:5432/d7hv5jt6s3aits'
+
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    email = db.Column(db.String(100), unique = True, nullable = False)
+    password = db.Column(db.String(100), nullable = False)
+    name = db.Column(db.String(100), nullable = False)
+    passport = db.Column(db.String(100), unique = True, nullable = False)
+    register = db.Column(db.Integer, nullable = False)
+    status = db.Column(db.String(100))
+    eyeCondition = db.Column(db.String(100))
+
+
+
+class Checkin(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    time = db.Column(db.DateTime(timezone=True),
+                           server_default=func.now())
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    place = db.Column(db.String(100))
+
+db.create_all()
 
 @app.route('/')
 def hello_world():
