@@ -147,6 +147,30 @@ def checkRegistered():
         else : 
             return make_response(json.dumps("2"))
 
+@app.route('/getuserhistory', methods = ['POST', 'GET'])
+def getUserHistory():
+    if(request.method == 'POST'):
+        form = json.loads(request.data)
+        passport = form["passport"]
+        userid = User.query.filter_by(passport = passport).first()
+
+        if(userid):
+            history = Checkin.query.filter_by(user = userid.id).all()
+            res = []
+            temp = []
+            for i in history:
+                temp['id'] = i.id
+                temp['time'] = i.time
+                temp['user'] = i.user
+                temp['place'] = i.place
+
+                res.append(temp)
+
+            return jsonify(res)
+
+        return "Fail"
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
