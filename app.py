@@ -85,8 +85,19 @@ def login():
         if user:
 
             if(user.password == password):
-
-                return make_response(json.dumps("Login Successfull")),200
+                print(user)
+                temp = {}
+                temp['id'] = user.id
+                temp['email'] = user.email
+                temp['password'] = user.password
+                temp['passport'] = user.passport
+                temp['name'] = user.name
+                temp['register'] = user.register
+                temp['status'] = user.status
+                temp['eyeCondition'] = user.eyeCondition
+                # return make_response(json.dumps("Login Successfull")),200
+                print(temp)
+                return jsonify(temp)
             else:
                 return make_response(json.dumps('Incorrect password'))
         else:
