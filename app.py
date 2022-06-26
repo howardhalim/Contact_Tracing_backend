@@ -157,15 +157,15 @@ def getUserHistory():
         if(userid):
             history = Checkin.query.filter_by(user = userid.id).all()
             res = []
-            temp = []
+            temp = {}
             for i in history:
                 temp['id'] = i.id
                 temp['time'] = i.time
                 temp['user'] = i.user
                 temp['place'] = i.place
-
+                
                 res.append(temp)
-
+                temp = {}
             return jsonify(res)
 
         return "Fail"
