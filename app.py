@@ -117,7 +117,13 @@ def checkin():
                                 )
             db.session.add(new_checkin)
             db.session.commit()
-            return make_response(json.dumps('Successfully Check in')), 200
+            temp = {}
+            temp['id'] = userid.id
+            temp['name'] = userid.name
+            temp['status'] = userid.status
+            temp['eyeCondition'] = userid.eyeCondition
+
+            return jsonify(temp)
         else:
             return make_response(json.dumps("Unsuccessful Check in"))
 
@@ -166,6 +172,7 @@ def getUserHistory():
                 
                 res.append(temp)
                 temp = {}
+                
             return jsonify(res)
 
         return "Fail"
