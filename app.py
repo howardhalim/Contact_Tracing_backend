@@ -176,7 +176,56 @@ def getUserHistory():
             return jsonify(res)
 
         return "Fail"
+@app.route('/updateStatus', methods = ['POST'])
+def updateStatus():
+    if(request.method == 'POST'):
+        form = json.loads(request.data)
+        passport = form['passport']
+        status = form['status']
+        userid = User.query.filter_by(passport = passport).first()
+        if(userid):
+            print(userid.status)
+            userid.status = status
+            db.session.add(userid)
+            db.session.commit()
+            return make_response(json.dumps("Status Updated"))
+        return make_response(json.dumps("Fail to Update Status"))
 
+@app.route('/updateRegister', methods = ['POST'])
+def updateRegister():
+    if(request.method == 'POST'):
+        form = json.loads(request.data)
+        passport = form['passport']
+        register = form['register']
+        userid = User.query.filter_by(passport = passport).first()
+        if(userid):
+            print(userid.register)
+            userid.register = register
+            db.session.add(userid)
+            db.session.commit()
+            return make_response(json.dumps("Register Updated"))
+        return make_response(json.dumps("Fail to Update Register"))
+
+@app.route('/getMe', methods = ['POST'])
+def getMe():
+    if(request.method == 'POST'):
+        form = json.loads(request.data)
+        id = form['id']
+        user = User.query.filter_by(id = id).first()
+        if(user):
+            temp = {}
+            temp['id'] = user.id
+            temp['email'] = user.email
+            temp['password'] = user.password
+            temp['passport'] = user.passport
+            temp['name'] = user.name
+            temp['register'] = user.register
+            temp['status'] = user.status
+            temp['eyeCondition'] = user.eyeCondition
+            # return make_response(json.dumps("Login Successfull")),200
+            print(temp)
+            return jsonify(temp)
+        return make_response(json.dumps("No data"))
 
 if __name__ == "__main__":
     app.run(debug=True)
