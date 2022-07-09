@@ -35,6 +35,7 @@ class Checkin(db.Model):
                            default=datetime.utcnow)
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
     place = db.Column(db.String(100))
+    eyeStatus = db.Column(db.String(100))
 
 
 @app.route('/')
@@ -109,11 +110,13 @@ def checkin():
         form = json.loads(request.data)
         place = form["place"]
         user = form["user"]
+        eyestatus = form["eyestatus"]
         userid = User.query.filter_by(passport = user).first()
         if(userid):
             print(place, userid.id)
             new_checkin = Checkin(  place = place,
                                     user = userid.id,
+                                    eyestatus = eyestatus,
                                 )
             db.session.add(new_checkin)
             db.session.commit()
