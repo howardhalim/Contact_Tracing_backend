@@ -172,7 +172,7 @@ def getUserHistory():
                 temp['time'] = i.time
                 temp['user'] = i.user
                 temp['place'] = i.place
-                
+                temp['eyestatus'] = i.eyestatus
                 res.append(temp)
                 temp = {}
                 
