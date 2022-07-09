@@ -35,7 +35,7 @@ class Checkin(db.Model):
                            default=datetime.utcnow)
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
     place = db.Column(db.String(100))
-    eyeStatus = db.Column(db.String(100))
+    eyestatus = db.Column(db.String(100))
 
 
 @app.route('/')
