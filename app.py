@@ -118,6 +118,8 @@ def checkin():
                                     user = userid.id,
                                     eyestatus = eyestatus,
                                 )
+            userid.status = eyestatus
+
             db.session.add(new_checkin)
             db.session.commit()
             temp = {}
