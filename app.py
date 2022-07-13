@@ -61,7 +61,10 @@ def register():
         name = form["name"]
         passport = form["passport"]
         user = User.query.filter_by(email=email).first()
-        if user:
+        passportcheck = User.query.filter_by(passport = passport).first()
+        if(passportcheck):
+            return make_response(json.dumps('Passport already exists!'))
+        elif user:
             return make_response(json.dumps('Email already exists!'))
         else:
             new_user = User(email=email,
